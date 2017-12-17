@@ -321,22 +321,22 @@ The test case 1 is derived from the given file *matrixAdd_org.cu*. Some parts of
 1. The *main()* function is deleted so that when the test case is run, there is no need to add dependency. 
 2. In the definition of kernel function *matrixAddCUDA()*, statements below are added to test whether the translator can detect other forms of references of *blockIdx.x* and *blockIdx.y*. These two references are expected to be transformed. 
 
-	...
-    printf("Referrence of blockIdx.x: %d.\n", blockIdx.x); //line 43
-    printf("Referrence of blockIdx.y: %d.\n", blockIdx.y); //line 44
-	...
+		...
+	    printf("Referrence of blockIdx.x: %d.\n", blockIdx.x); //line 43
+	    printf("Referrence of blockIdx.y: %d.\n", blockIdx.y); //line 44
+		...
 
 3. In the definition of function *matrixAdd()*, the name of grid argument and declaration are changed from "grid" to "newGrid" while the "dim3 grid(...)" is kept. This modification is aimed to test whether the translator can handle different name of grid variables. It is expected that "newGrid(...)" will be transformed while "grid(...)" keeps unchanged.
 	
-	...
-	dim3 grid(w / threads.x, h / threads.y); //line 111
-    dim3 newGrid(w / threads.x, h / threads.y); //line 112
-	...
-    matrixAddCUDA<<< newGrid, threads >>>(d_C, d_A, d_B, w, h); //line 117
+		...
+		dim3 grid(w / threads.x, h / threads.y); //line 111
+	    dim3 newGrid(w / threads.x, h / threads.y); //line 112
+		...
+	    matrixAddCUDA<<< newGrid, threads >>>(d_C, d_A, d_B, w, h); //line 117
 	
 4. In the definition of function *matrixAdd()*, another call for *matrixAddCUDA()* is added to test whether the translator can handle multiple kernel function calls. It is expected that this call will also be transformed.
 
-	matrixAddCUDA<<< newGrid, threads >>>(d_C, d_A, d_B, w, h);// line 147
+		matrixAddCUDA<<< newGrid, threads >>>(d_C, d_A, d_B, w, h);// line 147
 
 
 
@@ -347,22 +347,21 @@ The test case 2 is derived from the given file *matrixMul_org.cu*. Some parts of
 1. The main() function is deleted so that when the test case is run, there is no need to add dependency. 
 2. In the definition of function *matrixMultiply()*, a new grid variable is declared and the execution configuration of one kernel call is changed to test whether the translator can handle different execution configurations. Also, it tests whether the grid variables can be one-dimension and three-dimension. It is expected all statements below will be transformed.
 
-	...
-    dim3 gridx(dimsB.x / threads.x); // line 202
-
-    dim3 grid(dimsB.x / threads.x, dimsA.y / threads.y, 2); // line 204
-	...
-
-    ...
-    if (block_size == 16)
-    {
-        matrixMulCUDA<16><<< gridx, threads >>>(d_C, d_A, d_B, dimsA.x, dimsB.x); // line 212
-    }
-    else
-    {
-        matrixMulCUDA<32><<< grid, threads >>>(d_C, d_A, d_B, dimsA.x, dimsB.x); // line 216
-    }
-
+		...
+	    dim3 gridx(dimsB.x / threads.x); // line 202
+	
+	    dim3 grid(dimsB.x / threads.x, dimsA.y / threads.y, 2); // line 204
+		...
+	
+	    ...
+	    if (block_size == 16)
+	    {
+	        matrixMulCUDA<16><<< gridx, threads >>>(d_C, d_A, d_B, dimsA.x, dimsB.x); // line 212
+	    }
+	    else
+	    {
+	        matrixMulCUDA<32><<< grid, threads >>>(d_C, d_A, d_B, dimsA.x, dimsB.x); // line 216
+	    }
 
 
 ### Test Case 3 ###
