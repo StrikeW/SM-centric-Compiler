@@ -9,11 +9,11 @@ In this project, a source-to-source translator that can transform CUDA code to a
 
 ### Assumptions ###
 
-1. The translator is built and run under the same environment as the LLVM Virtual Machine provided. Otherwise, the instructions are not guaranteed to work. 
-2. The original CUDA file to be translated should be with the suffix ".cu" to ensure the naming of generated file
+The original CUDA file to be translated should be with the suffix ".cu" to ensure the naming of generated file
 
 ### Build ###
 
+0. Run [install.sh](./install.sh) to configure the environment
 1. Direct to the clang tool source folder (**/home/ubuntu/llvm/llvm/tools/clang/tools**)
 2. Create a folder named **sm-centric**
 3. Put the **SM\_centric\_transformation.cpp** (Source code) and **CMakeLists.txt** (Dependency file) under the **sm-centric** folder. Both files can be found in the **Source Code** folder within the submitted files
