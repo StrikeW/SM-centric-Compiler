@@ -1,4 +1,4 @@
-# CSC 512 Final Project #
+# Source-to-source Translator: SM-centric Transformation #
 
 Xiangqing Ding(xding3)
 
